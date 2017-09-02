@@ -52,6 +52,18 @@ function populateCard(ideaCard) {
 }
 
 
+function resetHeader() {
+	$('.title-input').focus();
+	$('.title-input').val('');
+	$('.idea-input').val('');
+};
+
+function deleteCard(e) {
+	if (e.target.className === 'delete-button') {
+		var cardDelete = e.target.closest('article');
+		$(cardDelete).remove();
+	}
+};
 
 
 
@@ -83,28 +95,6 @@ function populateCard(ideaCard) {
 
 // 				return newCard;
 // };
-
-
-function resetHeader() {
-	$('.title-input').focus();
-	$('.title-input').val('');
-	$('.idea-input').val('');
-};
-
-function deleteCard(e) {
-	if (e.target.className === 'delete-button') {
-		console.log('im here');
-		var cardDelete = e.target.closest('article');
-		$(cardDelete).remove();
-	}
-};
-
-
-
-
-
-
-
 
 
 
