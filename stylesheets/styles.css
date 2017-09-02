@@ -1,0 +1,125 @@
+
+header {
+	 background-color: #e5f3f2;
+	 padding: 30px 15px 18px;
+}
+
+h1 {
+	font-family: Roboto Slab;
+	font-weight: 700;
+	color: #00a79d;
+	font-size: 40px;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+h1 span {
+	color: #6d6e71;
+}
+
+h2 {
+	font-family: Roboto Slab;
+	font-weight: 700;
+	color: #6d6e71;
+}
+
+h5 {
+	font-family: Roboto Slab;
+}
+
+p {
+	color: #939598;
+	margin-top: 6px;
+	margin-bottom: 16px;
+	font-family: Open Sans;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 1.3;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+main {
+	padding: 18px;
+}
+
+hr {
+	margin-top: 18px;
+	border: 1px solid #d1d3d4;
+}
+
+.title-input, .idea-input, .save-button, .search {
+	border: 1px solid #d1d3d4;
+	display: block;
+	padding-left: 5px;
+	font-size: 15px;
+}
+
+.title-input, .idea-input, .save-button, .search {
+	margin: 6px auto;
+	height: 21px;
+	width: 388px;
+}
+
+.save-button {
+	background-color: #00a79d;
+	color: #fff;
+	border: none;
+	padding: 5px 10px;
+	height: 31px;
+	width: 393px;
+}
+
+::placeholder {
+	color: #d1d3d4;
+}
+
+.search {
+	margin-bottom: 30px;
+}
+
+section {
+	width: 388px;
+	margin: auto;
+}
+
+
+.delete-button,
+.upvote-button,
+.downvote-button {
+	width: 21px;
+	background-color: #fff;
+	border: none;
+	padding: 0;
+}
+
+.h2-wrapper {
+	display: flex;
+	justify-content: space-between;
+}
+
+.quality-wrapper {
+	display: flex;
+}
+
+.upvote-button, .downvote-button, .quality {
+	margin-right: 15px;
+}
+
+.quality {
+	color: #626e71;
+	margin-top: 2px;
+	font-size: 14px;
+}
+
+.quality-span {
+	font-family: Open Sans;
+}
+
+
+
+
