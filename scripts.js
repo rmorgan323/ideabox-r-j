@@ -6,6 +6,11 @@ $('.save-button').on('click', function(e) {
 	populateCard();
 });
 
+$('section').on('click', function(e) {
+	e.preventDefault();
+	deleteCard(e);
+	
+});
 
 
 function populateCard(newCard) {
@@ -20,7 +25,7 @@ function createCard(title, idea) {
 	var newCard = document.createElement('article');
 	newCard.innerHTML = `<div class="h2-wrapper">
 					<h2 class="idea-title">${title}</h2>
-					<button class="delete-button"><img src="assets/delete.svg"></button>
+					<button class="delete-button"><img class="delete-button" src="assets/delete.svg"></button>
 				</div>
 				<p class="idea-body">${idea}</p>
 				<div class="quality-wrapper">
@@ -40,7 +45,13 @@ function resetHeader() {
 	$('.idea-input').val('');
 };
 
-
+function deleteCard(e) {
+	if (e.target.className === 'delete-button') {
+		var cardDelete = e.target.closest('article');
+		$(cardDelete).remove();
+		console.log(cardDelete);
+	}
+};
 
 
 
