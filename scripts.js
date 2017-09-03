@@ -16,11 +16,10 @@ $('.save-button').on('click', function(e) {
 $('section').on('click', function(e) {
 	e.preventDefault();
 	deleteCard(e);
+	upvote(e);
 	// qualityChange(e);
-	// upvote();
 	// downvote();
 });
-
 
 function formSubmit() {
 	var title = $('.title-input').val();
@@ -28,7 +27,6 @@ function formSubmit() {
 	var ideaCard = new IdeaCard(title, idea);
 	populateCard(ideaCard);
 };
-
 
 function populateCard(ideaCard) {
 	var newTitle = ideaCard.title;
@@ -65,7 +63,23 @@ function deleteCard(e) {
 	}
 };
 
+function upvote(e) {
+	if (e.target.className === 'upvote-button') {
+		console.log();
+	}
+}
 
+
+// function qualityChange(e) {
+// 	var qualityState = ['swill', 'plausible', 'genius'];
+// 	var i = $('.quality-span').val();
+// 	console.log(e.target.className);
+// 	console.log()
+// 	if (e.target.className === 'upvote-button') {
+// 		console.log('logging')
+// 		qualityState[i++];
+// 		$('.quality-span').text(qualityState[i]);
+// 	}
 
 
 // function populateCard(newCard) {
