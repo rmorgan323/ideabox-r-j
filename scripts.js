@@ -4,7 +4,21 @@ var IdeaCard = function(title, idea, id) {
 	this.title = title;
 	this.idea = idea;
 	this.id = Date.now();
-	this.quality = 'swill'
+	this.quality =  qualityArray[0];
+};
+
+var qualityArray = ['swill', 'plausible', 'genius'];
+
+
+IdeaCard.prototype.upvote = function(e) {
+	if (e.target.className === 'upvote-button') {
+	qualityArray++;
+	console.log(qualityArray);
+
+	var qualityUp = e.target.closest('.quality-span');
+	// qualityUp.text('hello');
+	// console.log(qualityUp);
+	}
 };
 
 
@@ -16,7 +30,8 @@ $('.save-button').on('click', function(e) {
 $('section').on('click', function(e) {
 	e.preventDefault();
 	deleteCard(e);
-	upvote(e);
+	IdeaCard.prototype.upvote(e);
+	editIdea(e);
 	// qualityChange(e);
 	// downvote();
 });
@@ -43,6 +58,7 @@ function populateCard(ideaCard) {
 					<button class="upvote-button"><img class="upvote-button" src="assets/upvote.svg"></button>
 					<button class="downvote-button"><img class="downvote-button" src="assets/downvote.svg"></button>
 					<h5 class="quality">quality: <span class="quality-span">${newQuality}</span></h5>
+					<button class="edit-save">edit</button>
 				</div>
 				<hr>
 			</article>`);
@@ -63,11 +79,20 @@ function deleteCard(e) {
 	}
 };
 
-function upvote(e) {
-	if (e.target.className === 'upvote-button') {
-		console.log();
+function editIdea(e) {
+	if (e.target.className === 'edit-save') {
+		$('.search').focus();
+		$('p').attr('contenteditable', 'true');
+		//focus the idea body
+		//add attr contenteditable
 	}
-}
+};
+
+// function upvote(e) {
+// 	if (e.target.className === 'upvote-button') {
+// 		console.log();
+// 	}
+// }
 
 
 // function qualityChange(e) {
