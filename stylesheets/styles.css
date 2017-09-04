@@ -17,7 +17,7 @@ h1 span {
 	color: #6d6e71;
 }
 
-h2 {
+h2, .edit-title {
 	font-family: Roboto Slab;
 	font-weight: 700;
 	color: #6d6e71;
@@ -28,7 +28,7 @@ h5 {
 	font-family: Roboto Slab;
 }
 
-p {
+p, .edit-idea {
 	color: #939598;
 	margin-top: 9px;
 	margin-bottom: 24px;
@@ -54,7 +54,7 @@ hr {
 	margin-bottom: 24px;
 }
 
-.title-input, .idea-input, .save-button, .search {
+.title-input, .idea-input, .save-button, .search, textarea {
 	border: 1.5px solid #d1d3d4;
 	display: block;
 	/*padding-left: 7.5px;*/
@@ -70,6 +70,7 @@ hr {
 textarea {
 	resize: vertical;
 	width: 582px;
+	z-index: 1;
 }
 
 .idea-input {
