@@ -66,6 +66,41 @@ $('section').on('click', '.upvote-button', upvoteCard)
 
 $('section').on('click', '.downvote-button', downvoteCard)
 
+$('section').on('click', 'p', editIdea)
+
+$('section').on('click', 'h2', editTitle)
+
+// $('body').on('')
+// make an event listener only when a text area is present
+		// function to revert the text area back to a p tag with the edit text
+
+
+
+function editTitle() {
+	$('h2').replaceWith(`<textarea class="edit-title">${this.innerText}</textarea>`);
+	$('.edit-title').focus();
+	$('.edit-title').val();
+	$('.edit-title').val().length
+
+}
+
+function editIdea() {
+	$('p').replaceWith(`<textarea class="edit-idea">${this.innerText}</textarea>`);
+	$('.edit-idea').focus();
+}
+// function saveEditedIdea(e) {
+// 	var target = e.target;
+// 	if (target === $('.edit-idea')) {
+// 	console.log('hi');	
+// 	}
+// 	if (target !== $('.edit-idea')) {
+// 		console.log('else')
+// 	}
+// 	if ($('.edit-idea').length > 0) {
+// 	// console.log($('.edit-idea'))
+// 	}
+// }
+
 function formSubmit() {
 	var title = $('.title-input').val();
 	var idea = $('.idea-input').val();
@@ -199,7 +234,6 @@ function deleteCard(e) {
 // function buttonChangers() {
 // 	// if its this button do this
 // }
-
 
 
 
