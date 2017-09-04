@@ -31,7 +31,7 @@ function extractCard(elementInsideArticle) {
 	var id = article.data('id');
 	var quality = $('.quality-span', article).data('quality');
 	var ideaCard = new IdeaCard(title, idea, id, quality);
-	return ideaCard
+	return ideaCard;
 }
 
 function upvoteCard() {
@@ -82,12 +82,24 @@ function populateCard(ideaCard) {
 	return (`<article data-id="${newId}" class="idea-card">  
 				<div class="h2-wrapper">
 					<h2 class="idea-title">${newTitle}</h2>
-					<button class="delete-button"><img src="assets/delete.svg"></button>
+					<button class="delete-button">
+						<div class="delete-front">
+							<img src="assets/delete.svg">
+						</div>
+					</button>
 				</div>
 				<p class="idea-body">${newIdea}</p>
 				<div class="quality-wrapper">
-					<button class="upvote-button"><img src="assets/upvote.svg"></button>
-					<button class="downvote-button"><img src="assets/downvote.svg"></button>
+					<button class="upvote-button">
+						<div class="upvote-front">
+							<img src="assets/upvote.svg">
+						</div>
+					</button>
+					<button class="downvote-button">
+						<div class="downvote-front">
+							<img src="assets/downvote.svg">
+						</div>
+					</button>
 					<h5 class="quality">quality: <span data-quality="${ideaCard.quality}" class="quality-span">${newQuality}</span></h5>
 					<button class="edit-save">edit</button>
 				</div>

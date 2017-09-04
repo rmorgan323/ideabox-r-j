@@ -51,6 +51,7 @@ main {
 hr {
 	margin-top: 27px;
 	border: 1.5px solid #d1d3d4;
+	margin-bottom: 24px;
 }
 
 .title-input, .idea-input, .save-button, .search {
@@ -85,6 +86,7 @@ h2, .idea-body {
 	color: #ff7466;
 	font-size: 21px;
 	margin-left: auto;
+	margin-bottom: 5px;
 	transition: all .3s ease;
 }
 
@@ -127,7 +129,7 @@ h2, .idea-body {
 }
 
 .search {
-	margin-bottom: 45px;
+	margin-bottom: 42px;
 }
 
 section {
@@ -135,14 +137,44 @@ section {
 	margin: auto;
 }
 
+.upvote-front, 
+.downvote-front, 
+.delete-front {
+	width: 31px;
+	background-color: #fff;
+	border: none;
+	padding: 0;
+	transition: all .3s ease;
+}
+
+.upvote-front:hover, 
+.downvote-front:hover, 
+.delete-front:hover {
+	opacity: 0;
+	transition: all .3s ease;
+}
 
 .delete-button,
 .upvote-button,
 .downvote-button {
-	width: 31.5px;
-	background-color: #fff;
+	width: 31px;
+	height: 31px;
 	border: none;
 	padding: 0;
+	background-color: #fff;
+	background-repeat: no-repeat;
+}
+
+.delete-button {
+	background-image: url("../assets/delete-hover.svg");
+}
+
+.upvote-button {
+	background-image: url("../assets/upvote-hover.svg");
+}
+
+.downvote-button {
+	background-image: url("../assets/downvote-hover.svg");
 }
 
 .h2-wrapper {
@@ -196,6 +228,27 @@ section {
 		margin-right: 0;
 		width: 100%;
 		padding: 0;
+	}
+
+	.upvote-button, .downvote-button, .quality {
+		margin-right: 10px;
+}
+
+	.quality {
+		font-size: 17px;
+	}
+
+	.edit-save {
+		font-size: 17px;
+	}
+
+	.upvote-front, 
+	.downvote-front, 
+	.delete-front,
+	.delete-button,
+	.upvote-button,
+	.downvote-button {
+		width: 26px;
 	}
 
 }
