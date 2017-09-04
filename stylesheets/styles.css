@@ -79,6 +79,20 @@ h2, .idea-body {
 	overflow-wrap: break-word;
 }
 
+.edit-save {
+	background: none;
+	border: none;
+	color: #ff7466;
+	font-size: 21px;
+	margin-left: auto;
+	transition: all .3s ease;
+}
+
+.edit-save:hover {
+	color: #ff1700;
+	transition: all .3s ease;
+}
+
 .save-button {
 	background-color: #00a79d;
 	color: #fff;
@@ -87,7 +101,12 @@ h2, .idea-body {
 	padding: 7.5px 15px;
 	height: 46.5px;
 	width: 587px;
+	transition: all .3s ease;
+}
 
+.save-button:hover {
+	background-color: #045e55;
+	transition: all .3s ease;
 }
 
 *:focus {
@@ -96,8 +115,10 @@ h2, .idea-body {
 }
 
 .save-button:focus {
+	background-color: #045e55;
 	box-shadow: 0 0 5px #fff;
 	outline: 3px solid #fff;
+	transition: all .3s ease;
 }
 
 ::placeholder {
