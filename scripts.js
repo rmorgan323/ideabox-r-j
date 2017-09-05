@@ -70,22 +70,37 @@ $('section').on('click', 'p', editIdea)
 
 $('section').on('click', 'h2', editTitle)
 
+$('section').on('focusout', '.edit-idea', editIdeaSave)
+
+$('section').on('focusout', '.edit-title', editTitleSave)
+
+function editIdeaSave() {
+	$(this).replaceWith(`<p class="idea-body">${$(this).val()}</p>`);
+	var ideaCard = extractCard(this);
+	$(this).closest('article').replaceWith(populateCard(ideaCard));
+}
+
+function editTitleSave() {
+	$(this).replaceWith(`<h2 class="idea-title">${$(this).val()}</h2>`);
+	var ideaCard = extractCard(this);
+	$(this).closest('article').replaceWith(populateCard(ideaCard));
+}
+
 // $('body').on('')
 // make an event listener only when a text area is present
 		// function to revert the text area back to a p tag with the edit text
 
-
-
 function editTitle() {
-	$('h2').replaceWith(`<textarea class="edit-title">${this.innerText}</textarea>`);
+	var article = $(this).closest('article');
+	$('h2', article).replaceWith(`<textarea class="idea-title edit-title">${$(this).text()}</textarea>`);
 	$('.edit-title').focus();
-	$('.edit-title').val();
-	$('.edit-title').val().length
-
+	// $('.edit-title').val();
+	// $('.edit-title').val().length
 }
 
 function editIdea() {
-	$('p').replaceWith(`<textarea class="edit-idea">${this.innerText}</textarea>`);
+	var article = $(this).closest('article');
+	$('p', article).replaceWith(`<textarea class="idea-body edit-idea">${$(this).text()}</textarea>`);
 	$('.edit-idea').focus();
 }
 // function saveEditedIdea(e) {
@@ -136,7 +151,7 @@ function populateCard(ideaCard) {
 						</div>
 					</button>
 					<h5 class="quality">quality: <span data-quality="${ideaCard.quality}" class="quality-span">${newQuality}</span></h5>
-					<button class="edit-save">edit</button>
+	
 				</div>
 				<hr>
 			</article>`);
