@@ -190,6 +190,10 @@ section {
 	font-family: Open Sans;
 }
 
+.card-display-none {
+	display: none;
+}
+
 @media screen and (max-width: 655px) {
 	header {
 		padding: 20px 22px 10px;
@@ -219,6 +223,9 @@ section {
 		width: 100%;
 		padding: 0;
 	}
+
+
+
 
 	/*.upvote-button, .downvote-button, .quality {
 		margin-right: 10px;

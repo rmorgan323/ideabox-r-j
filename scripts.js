@@ -1,28 +1,39 @@
-$('.title-input').focus();
+$(document).ready(function() {
+	$('.title-input').focus();
+	getStoredCards();
+});
 
-var IdeaCard = function(title, idea, id = Date.now(), quality = 0) {  //setting initial values
+var IdeaCard = function(title, idea, id = Date.now(), quality = 0) {
 	this.title = title;
 	this.idea = idea;
-	this.id = id;  //then letting values be changed
+	this.id = id; 
 	this.quality = quality;
 };
 
-IdeaCard.prototype.qualityString = function() {  //creates array, grabs current array index and returns string
+IdeaCard.prototype.qualityString = function() {
 	var qualityArray = ['swill', 'plausible', 'genius'];
 	return qualityArray[this.quality];
-}
+};
 
 IdeaCard.prototype.qualityIncrement = function() { 
 	if (this.quality < 2) {
 		this.quality++;
 	}
-}
+};
 
 IdeaCard.prototype.qualityDecrement = function() {
 	if (this.quality > 0) {
 		this.quality--;
 	}
-}
+};
+
+IdeaCard.prototype.doYouMatch = function(searchTerm) {
+	if (this.title.includes(searchTerm) || this.idea.includes(searchTerm) || this.qualityString().includes(searchTerm)) {
+		return true;
+	} else {
+		return false;
+	}
+};
 
 function extractCard(elementInsideArticle) {
 	var article = $(elementInsideArticle).closest('article');
@@ -35,15 +46,17 @@ function extractCard(elementInsideArticle) {
 }
 
 function upvoteCard() {
- 	var ideaCard = extractCard(this);     //this = event.target
+ 	var ideaCard = extractCard(this);
 	ideaCard.qualityIncrement();
 	$(this).closest('article').replaceWith(populateCard(ideaCard));
+	sendToLocalStorage();
 }
 
 function downvoteCard() {
  	var ideaCard = extractCard(this);
 	ideaCard.qualityDecrement();
 	$(this).closest('article').replaceWith(populateCard(ideaCard));
+	sendToLocalStorage();
 }
 
 $('.save-button').on('click', function(e) {
@@ -51,16 +64,7 @@ $('.save-button').on('click', function(e) {
 	formSubmit();
 });
 
-// $('section').on('click', function(e) {
-// 	e.preventDefault();
-// 	// deleteCard(e);
-	
-// 	// editIdea(e);
-// 	// qualityChange(e);
-// 	// downvote();
-// });
-
-$('section').on('click', '.delete-button', deleteCard)  //this notation tells the event listener to filter for .delete-button
+$('section').on('click', '.delete-button', deleteCard)
 
 $('section').on('click', '.upvote-button', upvoteCard)
 
@@ -74,28 +78,26 @@ $('section').on('focusout', '.edit-idea', editIdeaSave)
 
 $('section').on('focusout', '.edit-title', editTitleSave)
 
+$('.search').on('keyup', realtimeSearch)
+
 function editIdeaSave() {
 	$(this).replaceWith(`<p class="idea-body">${$(this).val()}</p>`);
 	var ideaCard = extractCard(this);
 	$(this).closest('article').replaceWith(populateCard(ideaCard));
+	sendToLocalStorage();
 }
 
 function editTitleSave() {
 	$(this).replaceWith(`<h2 class="idea-title">${$(this).val()}</h2>`);
 	var ideaCard = extractCard(this);
 	$(this).closest('article').replaceWith(populateCard(ideaCard));
+	sendToLocalStorage();
 }
-
-// $('body').on('')
-// make an event listener only when a text area is present
-		// function to revert the text area back to a p tag with the edit text
 
 function editTitle() {
 	var article = $(this).closest('article');
 	$('h2', article).replaceWith(`<textarea class="idea-title edit-title">${$(this).text()}</textarea>`);
 	$('.edit-title').focus();
-	// $('.edit-title').val();
-	// $('.edit-title').val().length
 }
 
 function editIdea() {
@@ -103,32 +105,38 @@ function editIdea() {
 	$('p', article).replaceWith(`<textarea class="idea-body edit-idea">${$(this).text()}</textarea>`);
 	$('.edit-idea').focus();
 }
-// function saveEditedIdea(e) {
-// 	var target = e.target;
-// 	if (target === $('.edit-idea')) {
-// 	console.log('hi');	
-// 	}
-// 	if (target !== $('.edit-idea')) {
-// 		console.log('else')
-// 	}
-// 	if ($('.edit-idea').length > 0) {
-// 	// console.log($('.edit-idea'))
-// 	}
-// }
 
 function formSubmit() {
 	var title = $('.title-input').val();
 	var idea = $('.idea-input').val();
 	var ideaCard = new IdeaCard(title, idea);
-	$('section').prepend(populateCard(ideaCard));  //moved prepend to formSubmit so that populateCard can be reused elsewhere (like when upvoting and downvoting)
+	$('section').prepend(populateCard(ideaCard)); 
 	resetHeader();
+	
+	sendToLocalStorage();
 };
+
+function sendToLocalStorage() {
+	var cardArray = [];
+	$('article').each(function (index, element) {
+		cardArray.push(extractCard(element));
+	});
+	localStorage.setItem("storedCards", JSON.stringify(cardArray));
+}
+
+function getStoredCards() {
+	var retrievedCards = JSON.parse(localStorage.getItem("storedCards"));
+	retrievedCards.forEach(function (retrievedCard) {
+		var ideaCard = new IdeaCard(retrievedCard.title, retrievedCard.idea, retrievedCard.id, retrievedCard.quality);
+		$('section').append(populateCard(ideaCard)); 
+	});
+}
 
 function populateCard(ideaCard) {
 	var newTitle = ideaCard.title;
 	var newIdea = ideaCard.idea;
 	var newId = ideaCard.id;
-	var newQuality = ideaCard.qualityString();  //stored data inside html article using data-id (line 82) and data-quality (line 91)
+	var newQuality = ideaCard.qualityString();
 	return (`<article data-id="${newId}" class="idea-card">  
 				<div class="h2-wrapper">
 					<h2 class="idea-title">${newTitle}</h2>
@@ -151,12 +159,10 @@ function populateCard(ideaCard) {
 						</div>
 					</button>
 					<h5 class="quality">quality: <span data-quality="${ideaCard.quality}" class="quality-span">${newQuality}</span></h5>
-	
 				</div>
 				<hr>
 			</article>`);
 }
-
 
 function resetHeader() {
 	$('.title-input').focus();
@@ -166,89 +172,23 @@ function resetHeader() {
 
 function deleteCard(e) {
 	e.preventDefault();
-	$(this).closest('article').remove();  //super shorthand!  remember: this = event.target
-
-	// var cardDelete = e.target.closest('article');  <----heres the old way
-	// cardDelete.remove();							  <----
+	$(this).closest('article').remove();
+	sendToLocalStorage();
 };
 
-// function editIdea(e) {
-// 	if (e.target.className === 'edit-save') {
-// 		$('.search').focus();
-// 		$('p').attr('contenteditable', 'true');
-// 		//focus the idea body
-// 		//add attr contenteditable
-// 	}
-// };
-
-// function upvote(e) {
-// 	if (e.target.className === 'upvote-button') {
-// 		console.log();
-// 	}
-// }
+function realtimeSearch() {
+	var searchTerm = $('.search').val();
+	$('article').each(function (index, element) {
+		var ideaCard = extractCard(element);
+		if (ideaCard.doYouMatch(searchTerm)) {
+			$(element).removeClass('card-display-none');
+		} else {
+			$(element).addClass('card-display-none');
+		};
+	});
+};
 
 
-// function qualityChange(e) {
-// 	var qualityState = ['swill', 'plausible', 'genius'];
-// 	var i = $('.quality-span').val();
-// 	console.log(e.target.className);
-// 	console.log()
-// 	if (e.target.className === 'upvote-button') {
-// 		console.log('logging')
-// 		qualityState[i++];
-// 		$('.quality-span').text(qualityState[i]);
-// 	}
-
-
-// function populateCard(newCard) {
-// 	var title = $('.title-input').val();
-// 	var idea = $('.idea-input').val();
-// 	// var quality = $('.quality-span').
-// 	var addedCard = createCard(title, idea);
-// 	$(addedCard).prependTo('section');
-// };
-
-
-// function createCard(title, idea) {
-// 	var newCard = document.createElement('article');
-// 	var qualityState = 
-// 	newCard.innerHTML = `<div class="h2-wrapper">
-// 					<h2 class="idea-title">${title}</h2>
-// 					<button class="delete-button"><img class="delete-button" src="assets/delete.svg"></button>
-// 				</div>
-// 				<p class="idea-body">${idea}</p>
-// 				<div class="quality-wrapper">
-// 					<button class="upvote-button"><img class="upvote-button" src="assets/upvote.svg"></button>
-// 					<button class="downvote-button"><img class="downvote-button" src="assets/downvote.svg"></button>
-// 					<h5 class="quality">quality: <span class="quality-span">${quality}</span></h5>
-// 				</div>
-// 				<hr>`;
-// 				resetHeader();
-
-// 				return newCard;
-// };
-
-
-
-
-
-// function qualityChange(e) {
-// 	var qualityState = ['swill', 'plausible', 'genius'];
-// 	var i = $('.quality-span').val();
-// 	console.log(e.target.className);
-// 	console.log()
-// 	if (e.target.className === 'upvote-button') {
-// 		console.log('logging')
-// 		qualityState[i++];
-// 		$('.quality-span').text(qualityState[i]);
-// 	}
-
-// }
-
-
-// function buttonChangers() {
-// 	// if its this button do this
-// }
 
 
 
