@@ -1,4 +1,12 @@
+var cardArray = []
+
 $('.title-input').focus();
+
+// $(document).ready(function() {
+// 	getStoredCards()
+// });
+
+
 
 var IdeaCard = function(title, idea, id = Date.now(), quality = 0) {  //setting initial values
 	this.title = title;
@@ -122,7 +130,34 @@ function formSubmit() {
 	var ideaCard = new IdeaCard(title, idea);
 	$('section').prepend(populateCard(ideaCard));  //moved prepend to formSubmit so that populateCard can be reused elsewhere (like when upvoting and downvoting)
 	resetHeader();
+	cardArray.push(ideaCard);//push it to cardArray... //currently replacing data on same card
+	// console.log(cardArray);
+	sendToLocalStorage();//set to local storage()
 };
+
+function sendToLocalStorage(cardArray) {
+	localStorage.setItem("storedCards", JSON.stringify(cardArray));
+	console.log(localStorage);
+}
+
+/////needs help*****
+function getStoredCards() {
+	// var cardArray = [];
+	// if(localStorage.getItem("storedCards")){
+	// 	cardArray = JSON.parse(localStorage.getItem("storedCards"));
+	// } else {
+	// 	cardArray = [];
+	// }
+	
+	var retrievedCards = localStorage.getItem("storedCards");
+	// var parsedCards = JSON.parse(retrievedCards);
+	console.log();
+	// return retrievedCards;
+	// if (cardArray.length > 0) {
+	// //check for existing array
+	// //prepend what there 
+	// }
+}
 
 function populateCard(ideaCard) {
 	var newTitle = ideaCard.title;
