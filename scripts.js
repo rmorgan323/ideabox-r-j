@@ -28,7 +28,7 @@ IdeaCard.prototype.qualityDecrement = function() {
 };
 
 IdeaCard.prototype.doYouMatch = function(searchTerm) {
-	if (this.title.includes(searchTerm) || this.idea.includes(searchTerm) || this.qualityString().includes(searchTerm)) {
+	if (this.title.toUpperCase().includes(searchTerm) || this.idea.toUpperCase().includes(searchTerm) || this.qualityString().toUpperCase().includes(searchTerm)) {
 		return true;
 	} else {
 		return false;
@@ -125,7 +125,7 @@ function sendToLocalStorage() {
 }
 
 function getStoredCards() {
-	var retrievedCards = JSON.parse(localStorage.getItem("storedCards"));
+	var retrievedCards = JSON.parse(localStorage.getItem("storedCards")) || [];
 	retrievedCards.forEach(function (retrievedCard) {
 		var ideaCard = new IdeaCard(retrievedCard.title, retrievedCard.idea, retrievedCard.id, retrievedCard.quality);
 		$('section').append(populateCard(ideaCard)); 
@@ -177,7 +177,7 @@ function deleteCard(e) {
 };
 
 function realtimeSearch() {
-	var searchTerm = $('.search').val();
+	var searchTerm = $('.search').val().toUpperCase();
 	$('article').each(function (index, element) {
 		var ideaCard = extractCard(element);
 		if (ideaCard.doYouMatch(searchTerm)) {
