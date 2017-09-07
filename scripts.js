@@ -63,13 +63,13 @@ $('section').on('focusout', '.edit-idea', editIdeaSave);
 
 $('section').on('keyup', '.edit-title', function(e) {
 	if (e.keyCode === 13) {
-		editTitleSave(e);
+		$(this).blur();
 	}
 });
 
 $('section').on('keyup', '.edit-idea', function(e) {
 	if (e.keyCode === 13) {
-		editIdeaSave(e);
+		$(this).blur();
 	}
 });
 
@@ -164,17 +164,17 @@ function editIdea() {
 	$('.edit-idea').focus();
 };
 
-function editTitleSave(e) {
-	$(e.target).replaceWith(`<h2 class="idea-title">${$(e.target).val()}</h2>`);
-	var ideaCard = extractCard(e.target);
-	$(e.target).closest('article').replaceWith(populateCard(ideaCard));
+function editTitleSave() {
+	$(this).replaceWith(`<h2 class="idea-title">${$(this).val()}</h2>`);
+	var ideaCard = extractCard(this);
+	$(this).closest('article').replaceWith(populateCard(ideaCard));
 	sendToLocalStorage();
 };
 
-function editIdeaSave(e) {
-	$(e.target).replaceWith(`<p class="idea-body">${$(e.target).val()}</p>`);
-	var ideaCard = extractCard(e.target);
-	$(e.target).closest('article').replaceWith(populateCard(ideaCard));
+function editIdeaSave() {
+	$(this).replaceWith(`<p class="idea-body">${$(this).val()}</p>`);
+	var ideaCard = extractCard(this);
+	$(this).closest('article').replaceWith(populateCard(ideaCard));
 	sendToLocalStorage();
 };
 
@@ -214,16 +214,3 @@ function realtimeSearch() {
 		};
 	});
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
