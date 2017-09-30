@@ -18,20 +18,6 @@ IdeaCard.prototype.qualityString = function() {
 	return qualityArray[this.quality]; //this = IdeaCard
 };
 
-//increments the quality value
-IdeaCard.prototype.qualityIncrement = function() { 
-	if (this.quality < 2) {
-		this.quality++;
-	}
-};
-
-//decrements the quality value
-IdeaCard.prototype.qualityDecrement = function() {
-	if (this.quality > 0) {
-		this.quality--;
-	}
-};
-
 //checks for matches in title, body and quality in the search input
 IdeaCard.prototype.doYouMatch = function(searchTerm) {
 	if (this.title.toUpperCase().includes(searchTerm) || this.idea.toUpperCase().includes(searchTerm) || this.qualityString().toUpperCase().includes(searchTerm)) {
@@ -47,9 +33,9 @@ $('.save-button').on('click', function(e) {
 	formSubmit();
 });
 
-$('section').on('click', '.upvote-button', upvoteCard);
+// $('section').on('click', '.upvote-button', upvoteCard);
 
-$('section').on('click', '.downvote-button', downvoteCard);
+$('section').on('click', '.upvote-button, .downvote-button', changeQuality);
 
 $('section').on('click', '.delete-button', deleteCard);
 
@@ -129,20 +115,17 @@ function populateCard(ideaCard) {
 			</article>`);
 };
 
-//replaces the quality string and saves quality
-function upvoteCard() {
+function changeQuality() {
  	var ideaCard = extractCard(this);
-	ideaCard.qualityIncrement();
+	var currentQuality = ideaCard.quality;
+	var indexChange = $(this).hasClass('upvote-button') ? 1:-1;
+	var qualityArray = ['swill', 'plausible', 'genius'];
+	var nextQuality = currentQuality + indexChange;
+	if (qualityArray[nextQuality] !== undefined) {
+	ideaCard.quality = nextQuality;
 	$(this).closest('article').replaceWith(populateCard(ideaCard));
 	sendToLocalStorage();
-};
-
-//replaces quality string and saves quality
-function downvoteCard() {
- 	var ideaCard = extractCard(this);
-	ideaCard.qualityDecrement();
-	$(this).closest('article').replaceWith(populateCard(ideaCard));
-	sendToLocalStorage();
+	};
 };
 
 function deleteCard(e) {
