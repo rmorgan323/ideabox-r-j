@@ -20,7 +20,9 @@ IdeaCard.prototype.qualityString = function() {
 
 //checks for matches in title, body and quality in the search input
 IdeaCard.prototype.doYouMatch = function(searchTerm) {
-	if (this.title.toUpperCase().includes(searchTerm) || this.idea.toUpperCase().includes(searchTerm) || this.qualityString().toUpperCase().includes(searchTerm)) {
+	if (this.title.toUpperCase().includes(searchTerm) 
+		|| this.idea.toUpperCase().includes(searchTerm) 
+		|| this.qualityString().toUpperCase().includes(searchTerm)) {
 		return true;
 	} else {
 		return false;
@@ -33,15 +35,11 @@ $('.save-button').on('click', function(e) {
 	formSubmit();
 });
 
-// $('section').on('click', '.upvote-button', upvoteCard);
-
 $('section').on('click', '.upvote-button, .downvote-button', changeQuality);
 
 $('section').on('click', '.delete-button', deleteCard);
 
-$('section').on('click', 'h2', editTitle);
-
-$('section').on('click', 'p', editIdea);
+$('section').on('click', 'h2, p', editIdea);
 
 $('section').on('focusout', '.edit-title', editTitleSave);
 
@@ -135,16 +133,12 @@ function deleteCard(e) {
 };
 
 //edits and saves title and idea
-function editTitle() {
-	var article = $(this).closest('article');
-	$('h2', article).replaceWith(`<textarea class="idea-title edit-title">${$(this).text()}</textarea>`);
-	$('.edit-title').focus();
-};
-
 function editIdea() {
 	var article = $(this).closest('article');
-	$('p', article).replaceWith(`<textarea class="idea-body edit-idea">${$(this).text()}</textarea>`);
-	$('.edit-idea').focus();
+	$(this).hasClass('idea-title') ? 
+	$('h2', article).replaceWith(`<textarea class="idea-title edit-title">${$(this).text()}</textarea>`)
+	: $('p', article).replaceWith(`<textarea class="idea-body edit-idea">${$(this).text()}</textarea>`);
+	$('textarea').focus();
 };
 
 function editTitleSave() {
