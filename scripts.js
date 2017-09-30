@@ -41,9 +41,7 @@ $('section').on('click', '.delete-button', deleteCard);
 
 $('section').on('click', 'h2, p', editIdea);
 
-$('section').on('focusout', '.edit-title', editTitleSave);
-
-$('section').on('focusout', '.edit-idea', editIdeaSave);
+$('section').on('focusout', '.edit-title, .edit-idea', editIdeaSave);
 
 $('section').on('keyup', '.edit-title', function(e) {
 	if (e.keyCode === 13) {
@@ -141,15 +139,10 @@ function editIdea() {
 	$('textarea').focus();
 };
 
-function editTitleSave() {
-	$(this).replaceWith(`<h2 class="idea-title">${$(this).val()}</h2>`);
-	var ideaCard = extractCard(this);
-	$(this).closest('article').replaceWith(populateCard(ideaCard));
-	sendToLocalStorage();
-};
-
 function editIdeaSave() {
-	$(this).replaceWith(`<p class="idea-body">${$(this).val()}</p>`);
+	$(this).hasClass('idea-title') ?
+	$(this).replaceWith(`<h2 class="idea-title">${$(this).val()}</h2>`)
+	: $(this).replaceWith(`<p class="idea-body">${$(this).val()}</p>`);
 	var ideaCard = extractCard(this);
 	$(this).closest('article').replaceWith(populateCard(ideaCard));
 	sendToLocalStorage();
