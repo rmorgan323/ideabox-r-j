@@ -27,7 +27,7 @@ IdeaCard.prototype.qualityIncrement = function() {
 
 //decrements the quality value
 IdeaCard.prototype.qualityDecrement = function() {
-	if (this.quality > 0) {
+	if (this.quality >= 1) {
 		this.quality--;
 	}
 };
